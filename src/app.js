@@ -22,7 +22,7 @@ app.use(errorHandler);//controller Handler
 app.use('/api/auth', authRoutes);
 // app.use('/api/cart/', cartRoutes);
 // app.use('/api/payment/', paymentRoutes);
-app.use('/api/products/', productRoutes);
+// app.use('/api/products/', productRoutes);
 
 app.listen(PORT, () => {
       console.log(`Servidor conectado por el puerto ${PORT}`);

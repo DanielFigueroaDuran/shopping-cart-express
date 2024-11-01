@@ -12,17 +12,18 @@ export const showProductsId = async (id) => {
       return rows[0];
 };
 
-export const createProduct = async (name, price, img) => {
+export const createProducts = async (name, price, img) => {
       const { rows } = await pool.query(`INSERT INTO ${table} (name,price,img) VALUES ($1, $2, $3) RETURNING *`,
             [name, price, img]);
       return rows[0];
 };
 
-export const updateProduct = async (name, price, img, id) => {
+export const updateProducts = async (name, price, img, id) => {
       const { rows } = await pool.query(`UPDATE ${table} SET name = $1, price = $2, img = $3 where id = $4 RETURNING *`,
             [name, price, img, id]);
 };
 
-export const deleteProduct = async (id) => {
-      const { rows } = await pool.query(`DELETE FROM ${table} WHERE id = $1`, [id]);
+export const deleteProducts = async (id) => {
+      const { rows } = await pool.query(`DELETE FROM ${table} WHERE id = $1 RETURNING *`, [id]);
+      return rows[0];
 };

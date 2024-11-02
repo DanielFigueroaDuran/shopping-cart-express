@@ -12,13 +12,14 @@ export const showProductsId = async (id) => {
       return rows[0];
 };
 
-export const createProducts = async (name, price, img) => {
-      const { rows } = await pool.query(`INSERT INTO products (name,price,img) VALUES ($1, $2, $3) RETURNING *`, [name, price, img]);
+export const createProducts = async (name, price, image) => {
+      const { rows } = await pool.query(`INSERT INTO products (name,price,image) VALUES ($1, $2, $3) RETURNING *`, [name, price, image]);
       return rows[0];
 };
 
-export const updateProducts = async (name, price, img, id) => {
-      const { rows } = await pool.query(`UPDATE products SET name = $1, price = $2, img = $3 where id = $4 RETURNING *`, [name, price, img, id]);
+export const updateProducts = async (name, price, image, id) => {
+      const { rows } = await pool.query(`UPDATE products SET name = $1, price = $2, image = $3 where id = $4 RETURNING *`, [name, price, image, id]);
+      return rows[0];
 };
 
 export const deleteProducts = async (id) => {

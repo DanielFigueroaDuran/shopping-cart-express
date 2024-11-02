@@ -26,20 +26,20 @@ export const getProductId = async (req, res, next) => {
 };
 
 export const createProduct = async (req, res, next) => {
-      const { name, price, img } = req.body;
+      const { name, price, image } = req.body;
       try {
-            const response = await createProducts(name, price, img);
+            const response = await createProducts(name, price, image);
             res.status(201).json(response);
       } catch (error) {
-            next(error)
+            next(error);
       }
 };
 
 export const updateProduct = async (req, res, next) => {
       const { id } = req.params;
-      const { name, price, img } = req.body;
+      const { name, price, image } = req.body;
       try {
-            const response = await updateProducts(name, price, img, id);
+            const response = await updateProducts(name, price, image, id);
             res.status(200).json(response);
       } catch (error) {
             next(error);

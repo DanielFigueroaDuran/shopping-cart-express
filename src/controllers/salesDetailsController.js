@@ -1,8 +1,5 @@
-import {
-      createSalesDetails,
-      showDetailsSalesId
-} from "../models/salesDetailsModel.js";
-
+import { createSalesDetails, showDetailsSalesId } from "../models/salesDetailsModel.js";
+import { showSalesIdUsers } from "../models/salesModel.js";
 
 export const getDetailsSalesIdUsers = async (req, res, next) => {
       const { id_sales } = req.params;
@@ -15,9 +12,15 @@ export const getDetailsSalesIdUsers = async (req, res, next) => {
 };
 
 export const createDetalisSales = async (req, res, next) => {
-      const { id_sales, id_product, description, sales_price, amount, total } = req.body;
+      const userId = req.user.id;
+      const { id_product, description, sales_price, amount, total } = req.body;
       try {
-            const response = await createSalesDetails(id_sales, id_product, description, sales_price, amount, total);
+            const sales = await showDetailsSalesId(userId);
+            if (!sales) {
+                  return res.status(404).json({ error: "Venta no encontrada" });
+            };
+
+            const response = await createSalesDetails(sales.id, id_product, description, sales_price, amount, total);
             res.status(201).json(response);
       } catch (error) {
             next(error);

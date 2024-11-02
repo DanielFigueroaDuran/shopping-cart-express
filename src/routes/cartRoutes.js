@@ -1,25 +1,12 @@
 import { Router } from "express";
-import {
-      getProducts,
-      getProductId,
-      createProduct,
-      updateProduct,
-      deleteProduct
-} from "../controllers/productController.js";
-//import authenticate from "../middleware/authenticate.js";
+import { getSalesIdUsers, createSales } from "../controllers/salesController.js";
+import { getDetailsSalesIdUsers, createDetalisSales } from "../controllers/salesDetailsController.js";
 import { authenticate } from "../middleware/authenticate.js";
-import { isAdmin } from "../middleware/isAdmin.js";
 
 const router = Router();
 
-router.get('/', getProducts);
-router.get('/:id', getProductId);
-
-// Routes admin users
-
-router.post('/', authenticate, isAdmin, createProduct);
-router.put('/:id', authenticate, isAdmin, updateProduct);
-router.delete('/:id', authenticate, isAdmin, deleteProduct);
+router.post('/', authenticate, createSales);
+router.post('/item', authenticate, createDetalisSales);
 
 
 export default router;

@@ -2,7 +2,7 @@ import { pool } from "../config/db.js";
 
 
 export const showDetailsSalesId = async (id_sales) => {
-      const { rows } = await pool.query(`SELECT * FROM details_sales where id_sales =$1`, [id_sales]);
+      const { rows } = await pool.query(`SELECT * FROM details_sales where id_sales = $1`, [id_sales]);
       return rows[0];
 };
 

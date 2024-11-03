@@ -13,14 +13,22 @@ export const getDetailsSalesIdUsers = async (req, res, next) => {
 
 export const createDetalisSales = async (req, res, next) => {
       const userId = req.params.id_users;
+
       const { id_product, description, sales_price, amount, total } = req.body;
       try {
-            const sales = await showDetailsSalesId(userId);
+            const sales = await showSalesIdUsers(userId);
             if (!sales) {
                   return res.status(404).json({ error: "Venta no encontrada" });
             };
 
-            const response = await createSalesDetails(sales.id, id_product, description, sales_price, amount, total);
+            const response = await createSalesDetails(
+                  sales.id,
+                  id_product,
+                  description,
+                  sales_price,
+                  amount,
+                  total
+            );
             res.status(201).json(response);
       } catch (error) {
             next(error);

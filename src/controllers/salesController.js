@@ -14,7 +14,7 @@ export const getSalesIdUsers = async (req, res, next) => {
       }
 };
 
-export const createSales = async (req, res, next) => {
+export const createSale = async (req, res, next) => {
       const { id_users, state, total } = req.body;
       try {
             const response = await createSales(id_users, state, total);

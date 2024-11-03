@@ -12,7 +12,7 @@ export const getDetailsSalesIdUsers = async (req, res, next) => {
 };
 
 export const createDetalisSales = async (req, res, next) => {
-      const userId = req.user.id;
+      const userId = req.params.id_users;
       const { id_product, description, sales_price, amount, total } = req.body;
       try {
             const sales = await showDetailsSalesId(userId);

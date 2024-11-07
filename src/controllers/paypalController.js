@@ -7,10 +7,14 @@ const createOrder = async (req, res) => {
             intent: "CAPTURE",
             purchase_units: [
                   {
+                        item_list: {
+                              items: req.body.items,
+                        },
                         amount: {
                               currency_code: "USD",
-                              value: "100.00" // Cambia el valor según el monto de tu transacción
-                        }
+                              value: req.body.total // Cambia el valor según el monto de tu transacción
+                        },
+                        description: 'Esta es la estructura de pagos con paypal'
                   }
             ]
       });

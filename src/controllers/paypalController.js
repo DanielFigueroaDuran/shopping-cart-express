@@ -89,7 +89,7 @@ exports.createPayment = (req, res, next) => {
       });
 };
 
-exports.executePayment = async (req, res, next) => {
+export const executePayment = async (req, res, next) => {
       const { id_venta } = req.params;
       const { paymentId, PayerID } = req.query;
       const execute_payment_json = {

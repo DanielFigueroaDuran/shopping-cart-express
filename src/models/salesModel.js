@@ -11,7 +11,7 @@ export const createSales = async (id, state, total) => {
       return rows[0];
 };
 
-export const updateSalesStatus = async (state, id) => {
+export const confirmSales = async (state, id) => {
       const { rows } = await pool.query(`UPDATE sales SET state = $1 where id_users = $2 RETURNING *`, [state, id]);
       return rows[0];
 };

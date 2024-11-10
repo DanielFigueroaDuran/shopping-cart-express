@@ -46,7 +46,7 @@
 // };
 
 import paypal from "../config/paypal.js";
-//const { confirmarVenta } = require("../models/VentasModel");
+import { confirmSales } from "../models/salesModel.js";
 
 exports.createPayment = (req, res, next) => {
       const { items, total } = req.body

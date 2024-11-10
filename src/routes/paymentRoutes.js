@@ -4,6 +4,6 @@ import { createPayment, executePayment } from "../controllers/paypalController.j
 const router = Router();
 
 router.post('/create', authenticate, createPayment);
-router.get('/success', authenticate, executePayment);
+router.get('/success/:idsales', authenticate, executePayment);
 
 export default router;

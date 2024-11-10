@@ -48,15 +48,24 @@
 import paypal from "../config/paypal.js";
 import { confirmSales } from "../models/salesModel.js";
 
-exports.createPayment = (req, res, next) => {
-      const { items, total } = req.body
+export const createPayment = (req, res, next) => {
+      const { items, total } = req.body;
+
+      if (!items || !Array.isArray(items)) {
+            return res.status(400).json({ error: "Items no está definido o no es un array" });
+      };
+
+      if (!total) {
+            return res.status(400).json({ error: "El total no está definido" });
+      };
+
       const mappedItems = items.map(item => ({
-            name: item.descripcion,
-            sku: `SKU-${item.id_producto}`,
-            price: (item.precio_venta).toString(),
+            name: item.description,
+            sku: `SKU-${item.id_product}`,
+            price: (item.sales_price).toString(),
             currency: "USD",
-            quantity: item.cantidad
-      }))
+            quantity: item.amount
+      }));
       const create_payment_json = {
             intent: "sale",
             payer: {
@@ -90,7 +99,7 @@ exports.createPayment = (req, res, next) => {
 };
 
 export const executePayment = async (req, res, next) => {
-      const { id_venta } = req.params;
+      const { id_sales } = req.params;
       const { paymentId, PayerID } = req.query;
       const execute_payment_json = {
             payer_id: PayerID,
@@ -111,7 +120,7 @@ export const executePayment = async (req, res, next) => {
                         next(error);
                   } else {
                         try {
-                              await confirmarVenta("confirmado", id_venta);
+                              await confirmSales("confirmado", id_sales);
                               console.log("completo");
                               res.status(200).json({ payment });
                         } catch (error) {

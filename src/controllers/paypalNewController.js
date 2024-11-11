@@ -27,3 +27,18 @@ export const createOrder = async (req, res) => {
             res.status(500).send(err);
       }
 };
+
+// Ruta para capturar la orden
+export const captureOrder = async (req, res) => {
+      const { orderID } = req.body; // Recibe el orderID desde el frontend
+
+      const request = new paypal.orders.OrdersCaptureRequest(orderID);
+      request.requestBody({});
+
+      try {
+            const capture = await client().execute(request);
+            res.json(capture.result); // Enviar el resultado de la captura al cliente
+      } catch (err) {
+            res.status(500).send(err);
+      }
+};

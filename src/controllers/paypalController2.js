@@ -1,7 +1,7 @@
 import paypal from "../config/paypal.js";
 import { confirmSales } from "../models/salesModel.js";
 
-export const createPayment = (req, res) => {
+export const createPayment = (req, res, next) => {
       const create_payment_json = {
             intent: "sale",
             payer: {
@@ -26,7 +26,7 @@ export const createPayment = (req, res) => {
       };
       paypal.payment.create(create_payment_json, async function (error, payment) {
             if (error) {
-                  return res.status(500).json({ error: error.message });
+                  next(error);
             } else {
                   // const redirectUrl = payment.links.find(link => link.rel === "approval_url").href
                   // res.status(200).json({ redirectUrl });
@@ -37,7 +37,7 @@ export const createPayment = (req, res) => {
 };
 
 export const executePayment = async (req, res, next) => {
-      const { id_sales } = req.params;
+      const { idSales } = req.params;
       const { paymentId, PayerID } = req.query;
       const execute_payment_json = {
             payer_id: PayerID,
@@ -58,8 +58,8 @@ export const executePayment = async (req, res, next) => {
                         next(error);
                   } else {
                         try {
-                              await confirmSales("confirmado", id_sales);
-                              console.log("completo");
+                              await confirmSales("confirmado", idSales);
+                              console.log("completo", idSales);
                               res.status(200).json({ payment });
                         } catch (error) {
                               next(error)
@@ -67,4 +67,6 @@ export const executePayment = async (req, res, next) => {
                   }
             }
       );
+
+
 };

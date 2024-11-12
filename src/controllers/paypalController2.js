@@ -1,25 +1,7 @@
 import paypal from "../config/paypal.js";
 import { confirmSales } from "../models/salesModel.js";
 
-export const createPayment = (req, res, next) => {
-      const { items, total } = req.body;
-      console.log(items);
-
-      if (!items || !Array.isArray(items)) {
-            return res.status(400).json({ error: "Items no está definido o no es un array" });
-      };
-
-      if (!total) {
-            return res.status(400).json({ error: "El total no está definido" });
-      };
-
-      const mappedItems = items.map(item => ({
-            name: item.description,
-            sku: `SKU-${item.id_product}`,
-            price: (item.sales_price).toString(),
-            currency: "USD",
-            quantity: item.amount
-      }));
+export const createPayment = (req, res) => {
       const create_payment_json = {
             intent: "sale",
             payer: {
@@ -32,11 +14,11 @@ export const createPayment = (req, res, next) => {
             transactions: [
                   {
                         item_list: {
-                              items: mappedItems,
+                              items: req.body.items,
                         },
                         amount: {
                               currency: "USD",
-                              total: total,
+                              total: req.body.total,
                         },
                         description: "Esta es la estructura de pagos con paypal",
                   },
@@ -44,10 +26,12 @@ export const createPayment = (req, res, next) => {
       };
       paypal.payment.create(create_payment_json, async function (error, payment) {
             if (error) {
-                  next(error);
+                  return res.status(500).json({ error: error.message });
             } else {
-                  const redirectUrl = payment.links.find(link => link.rel === "approval_url").href
-                  res.status(200).json({ redirectUrl });
+                  // const redirectUrl = payment.links.find(link => link.rel === "approval_url").href
+                  // res.status(200).json({ redirectUrl });
+                  res.status(200).json({ payment });
+
             }
       });
 };

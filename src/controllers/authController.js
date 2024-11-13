@@ -13,7 +13,9 @@ export const signUpNewEmail = async (req, res) => {
             id_auth_supabase: data.user.id,
             name: "generico"
       };
-      await createUser(params)
+
+      const { role, id_auth_supabase, name } = params;
+      await createUser(role, id_auth_supabase, name);
 };
 
 export const signInNewSession = async (req, res) => {

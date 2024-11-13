@@ -10,6 +10,7 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 //import paypalNewRoutes from "./routes/paypalNewRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 // import supabaseRoutes from "./routes/supabaseRoutes.js";
+import usersRoutes from "./routes/usersRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -25,8 +26,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/cart/', cartRoutes);
 app.use('/api/payment/', paymentRoutes);
 //app.use('/api/paypal/', paypalNewRoutes);
-
 app.use('/api/products/', productRoutes);
+app.use('/api/users/', usersRoutes);
 
 app.listen(PORT, () => {
       console.log(`Servidor conectado por el puerto ${PORT}`);

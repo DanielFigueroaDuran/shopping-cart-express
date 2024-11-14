@@ -23,11 +23,11 @@ app.use(bodyParser.json());
 app.use(errorHandler);//controller Handler
 
 app.use('/api/auth', authRoutes);
-app.use('/api/cart/', cartRoutes);
-app.use('/api/payment/', paymentRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/payment', paymentRoutes);
 //app.use('/api/paypal/', paypalNewRoutes);
-app.use('/api/products/', productRoutes);
-app.use('/api/users/', usersRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/users', usersRoutes);
 
 app.listen(PORT, () => {
       console.log(`Servidor conectado por el puerto ${PORT}`);

@@ -9,7 +9,7 @@ import {
 export const getProducts = async (req, res, next) => {
       try {
             const result = await showAllProducts();
-            result.status(200).json(result);
+            res.status(200).json(result);
       } catch (error) {
             next(error); //passes the error to middleware
       }

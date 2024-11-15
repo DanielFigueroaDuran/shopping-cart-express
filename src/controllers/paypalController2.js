@@ -2,6 +2,16 @@ import paypal from "../config/paypal.js";
 import { confirmSales } from "../models/salesModel.js";
 
 export const createPayment = (req, res, next) => {
+      const { items, total } = req.body
+
+      const mappedItems = items.map(item => ({
+            name: item.descripcion,
+            sku: `SKU-${item.id_producto}`,
+            price: (item.precio_venta).toString(),
+            currency: "USD",
+            quantity: item.cantidad
+      }))
+
       const create_payment_json = {
             intent: "sale",
             payer: {
@@ -14,11 +24,11 @@ export const createPayment = (req, res, next) => {
             transactions: [
                   {
                         item_list: {
-                              items: req.body.items,
+                              items: mappedItems,
                         },
                         amount: {
                               currency: "USD",
-                              total: req.body.total,
+                              total: total,
                         },
                         description: "Esta es la estructura de pagos con paypal",
                   },
